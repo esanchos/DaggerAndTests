@@ -24,17 +24,12 @@ class MainActivity : AppCompatActivity() {
             tvOutput.text = etInput.text
         }
 
-        /*val carComponent = DaggerCarComponent.builder()
-            .horsePower(100)
-            .engineCapacity(1400)
-            .build()
-        carComponent.inject(this)*/
-        val carComponent = DaggerActivityComponent.builder()
+        DaggerActivityComponent.builder()
             .horsePower(100)
             .engineCapacity(1400)
             .appComponent((application as DoingTests).getAppComponent())
             .build()
-        carComponent.inject(this)
+            .inject(this)
 
         car1.drive()
         car2.drive()

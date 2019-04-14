@@ -7,22 +7,25 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class WheelsModule {
+object WheelsModule {
 
     @Provides
-    fun provideRims(): Rims {
+    @JvmStatic
+    internal fun provideRims(): Rims {
         return Rims()
     }
 
     @Provides
-    fun provideTires(): Tires {
+    @JvmStatic
+    internal fun provideTires(): Tires {
         val tires = Tires()
         tires.inflate()
         return tires
     }
 
     @Provides
-    fun provideWheels(rims: Rims, tires: Tires): Wheels {
+    @JvmStatic
+    internal fun provideWheels(rims: Rims, tires: Tires): Wheels {
         return Wheels(rims, tires)
     }
 }
