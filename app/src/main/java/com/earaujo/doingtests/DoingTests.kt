@@ -13,7 +13,7 @@ class DoingTests: Application() {
         component = DaggerAppComponent.create()
     }
 
-    public fun getAppComponent(): AppComponent {
+    fun getAppComponent(): AppComponent {
         return component
     }
 }
