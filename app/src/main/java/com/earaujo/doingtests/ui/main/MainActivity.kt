@@ -1,9 +1,10 @@
-package com.earaujo.doingtests
+package com.earaujo.doingtests.ui.main
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.earaujo.doingtests.DoingTests
+import com.earaujo.doingtests.R
 import com.earaujo.doingtests.car.Car
-import com.earaujo.doingtests.di.ActivityComponent
 import com.earaujo.doingtests.di.DaggerActivityComponent
 //import com.earaujo.doingtests.di.DaggerCarComponent
 import kotlinx.android.synthetic.main.activity_main.*

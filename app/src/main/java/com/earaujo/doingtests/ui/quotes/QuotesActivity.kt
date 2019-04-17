@@ -21,11 +21,13 @@ class QuotesActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quotes)
 
-        DaggerQuotesComponent.builder().appComponent((application as DoingTests).getAppComponent()).build().inject(this)
+        DaggerQuotesComponent
+            .builder()
+            .appComponent((application as DoingTests).getAppComponent())
+            .build()
+            .inject(this)
 
         initializeUi()
-
-        Log.d("NUNES", "omg $viewModelFactory")
     }
 
     private fun initializeUi() {
