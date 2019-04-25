@@ -8,12 +8,11 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-object InstaRepositoryModule {
+open class InstaRepositoryModule {
 
     @Provides
     @Singleton
-    @JvmStatic
-    internal fun provideInstaRepository(network: Network): InstaRepository {
+    open fun provideInstaRepository(network: Network): InstaRepository {
         return InstaRepositoryImpl(network)
     }
 }

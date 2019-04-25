@@ -2,8 +2,8 @@ package com.earaujo.doingtests.di
 
 import com.earaujo.doingtests.ui.main.MainActivity
 import com.earaujo.doingtests.car.Car
-import com.earaujo.doingtests.modules.PetrolEngineModule
-import com.earaujo.doingtests.modules.WheelsModule
+import com.earaujo.doingtests.modules.car.PetrolEngineModule
+import com.earaujo.doingtests.modules.car.WheelsModule
 import dagger.Component
 import dagger.BindsInstance
 import javax.inject.Named

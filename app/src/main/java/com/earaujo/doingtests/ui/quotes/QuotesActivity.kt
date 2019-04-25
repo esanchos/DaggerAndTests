@@ -23,7 +23,7 @@ class QuotesActivity: AppCompatActivity() {
 
         DaggerQuotesComponent
             .builder()
-            .appComponent((application as DoingTests).getAppComponent())
+            .appComponent((application as DoingTests).appComponent)
             .build()
             .inject(this)
 

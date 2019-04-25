@@ -1,4 +1,4 @@
-package com.earaujo.doingtests.modules
+package com.earaujo.doingtests.modules.car
 
 import com.earaujo.doingtests.car.DieselEngine
 import com.earaujo.doingtests.car.Engine

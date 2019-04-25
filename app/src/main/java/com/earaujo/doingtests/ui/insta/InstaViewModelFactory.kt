@@ -12,6 +12,6 @@ class InstaViewModelFactory @Inject constructor(private val instaRepository: Ins
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return QuotesViewModel(instaRepository) as T
+        return InstaViewModel(instaRepository) as T
     }
 }

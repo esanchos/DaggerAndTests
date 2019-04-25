@@ -1,17 +1,13 @@
 package com.earaujo.doingtests.modules
 
-import com.earaujo.doingtests.car.Driver
+import com.earaujo.doingtests.DoingTests
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-object DriverModule {
-
+class AppModule(private val app: DoingTests) {
     @Provides
     @Singleton
-    @JvmStatic
-    internal fun provideDriver(): Driver {
-        return Driver();
-    }
+    fun provideApp(): DoingTests = app
 }

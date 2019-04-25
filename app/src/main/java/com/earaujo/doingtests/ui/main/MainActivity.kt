@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         DaggerActivityComponent.builder()
             .horsePower(100)
             .engineCapacity(1400)
-            .appComponent((application as DoingTests).getAppComponent())
+            .appComponent((application as DoingTests).appComponent)
             .build()
             .inject(this)
 

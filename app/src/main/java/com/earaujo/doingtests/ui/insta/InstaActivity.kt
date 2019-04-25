@@ -10,8 +10,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.earaujo.doingtests.DoingTests
 import com.earaujo.doingtests.R
 import com.earaujo.doingtests.data.model.Insta
-import com.earaujo.doingtests.data.network.NetworkFakeImpl
-import com.earaujo.doingtests.data.repository.InstaRepositoryImpl
 import com.earaujo.doingtests.di.DaggerInstaActivityComponent
 import kotlinx.android.synthetic.main.activity_insta.*
 import javax.inject.Inject
@@ -27,7 +25,7 @@ class InstaActivity : AppCompatActivity() {
 
         DaggerInstaActivityComponent
             .builder()
-            .appComponent((application as DoingTests).getAppComponent())
+            .appComponent((application as DoingTests).appComponent)
             .build()
             .inject(this)
 
@@ -36,7 +34,7 @@ class InstaActivity : AppCompatActivity() {
 
     private fun initializeUi() {
         val viewModel = ViewModelProviders.of(this, viewModelFactory)
-            .get(QuotesViewModel::class.java)
+            .get(InstaViewModel::class.java)
 
         setImageHeigthSize()
 
