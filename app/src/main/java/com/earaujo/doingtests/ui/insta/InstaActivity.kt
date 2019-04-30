@@ -5,11 +5,14 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.DisplayMetrics
+import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.earaujo.doingtests.DoingTests
 import com.earaujo.doingtests.R
 import com.earaujo.doingtests.data.model.Insta
+import com.earaujo.doingtests.data.repository.Resource
+import com.earaujo.doingtests.data.repository.Status
 import com.earaujo.doingtests.di.DaggerInstaActivityComponent
 import kotlinx.android.synthetic.main.activity_insta.*
 import javax.inject.Inject
@@ -54,18 +57,30 @@ class InstaActivity : AppCompatActivity() {
         return displayMetrics.widthPixels
     }
 
-    private fun populateUi(insta: Insta) {
-        tv_title_author_name.text = insta.titleAuthorName
-        tv_desc_author_name.text = insta.titleAuthorName
-        tv_desc_author_comment.text = insta.descAuthorComment
+    private fun populateUi(resourceData: Resource<Insta>) {
+        when (resourceData.status) {
+            Status.LOADING -> {
+                //TODO show loading spinner
+            }
+            Status.SUCCESS -> {
+                resourceData.data?.let {
+                    tv_title_author_name.text = it.titleAuthorName
+                    tv_desc_author_name.text = it.titleAuthorName
+                    tv_desc_author_comment.text = it.descAuthorComment
 
-        Glide.with(this)
-            .load(insta.titleImageUrl)
-            .apply(RequestOptions.circleCropTransform())
-            .into(iv_title_author_image)
+                    tv_title_sponsored.visibility = if (it.isSponsored) View.VISIBLE else View.GONE
 
-        Glide.with(this)
-            .load(insta.mainImageUrl)
-            .into(iv_main_imagem)
+                    Glide.with(this)
+                        .load(it.titleImageUrl)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(iv_title_author_image)
+
+                    Glide.with(this)
+                        .load(it.mainImageUrl)
+                        .into(iv_main_imagem)
+                }
+            }
+            Status.ERROR -> TODO()
+        }
     }
 }

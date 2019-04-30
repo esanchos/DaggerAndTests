@@ -1,11 +1,11 @@
-package com.earaujo.doingtests.ui
+package com.earaujo.doingtests.ui.insta
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import com.earaujo.doingtests.data.model.Insta
 import com.earaujo.doingtests.data.repository.InstaRepository
-import com.earaujo.doingtests.ui.insta.InstaViewModel
+import com.earaujo.doingtests.data.repository.Resource
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -23,7 +23,7 @@ class InstaViewModelTest {
     var rule: TestRule = InstantTaskExecutorRule()
 
     @Mock
-    lateinit var observer: Observer<Insta>
+    lateinit var observer: Observer<Resource<Insta>>
 
     @Mock
     lateinit var repository: InstaRepository
@@ -39,20 +39,21 @@ class InstaViewModelTest {
 
     @Test
     fun addition_isCorrect() {
-        val liveData = MutableLiveData<Insta>()
+        val liveData = MutableLiveData<Resource<Insta>>()
         val instaData = Insta(
             "https://cdn.glitch.com/c335e4ce-57d4-4636-951c-12539010222a%2Feu.jpg?1555454871499",
             "eduardoaraujo",
             "https://cdn.glitch.com/c335e4ce-57d4-4636-951c-12539010222a%2Fbeach.jpg?1555454872159",
             "Este é uma foto de praia"
         )
-        liveData.value = instaData
+        val res = Resource.success(instaData)
+        liveData.value = res
 
         Mockito.`when`(this.repository.getData()).thenAnswer {
             return@thenAnswer liveData
         }
 
         instaViewModel.getData().observeForever(observer)
-        Mockito.verify(observer).onChanged(instaData)
+        Mockito.verify(observer).onChanged(res)
     }
 }

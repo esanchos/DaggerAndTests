@@ -13,6 +13,8 @@ import com.earaujo.doingtests.DoingTests
 import com.earaujo.doingtests.R
 import com.earaujo.doingtests.data.model.Insta
 import com.earaujo.doingtests.data.repository.InstaRepository
+import com.earaujo.doingtests.data.repository.Resource
+import com.earaujo.doingtests.data.repository.Status
 import com.earaujo.doingtests.di.AppComponentTest
 import com.earaujo.doingtests.di.DaggerAppComponentTest
 import com.earaujo.doingtests.modules.AppModule
@@ -24,7 +26,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.MockitoAnnotations
 import javax.inject.Inject
-
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -53,14 +54,37 @@ class InstaActivityTest {
 
     @Test
     fun userInfo_returns_no_info_by_default() {
-        val liveData = MutableLiveData<Insta>()
+        val liveData = MutableLiveData<Resource<Insta>>()
         val instaData = Insta(
             "https://cdn.glitch.com/c335e4ce-57d4-4636-951c-12539010222a%2Feu.jpg?1555454871499",
             "eduardoaraujo",
             "https://cdn.glitch.com/c335e4ce-57d4-4636-951c-12539010222a%2Fbeach.jpg?1555454872159",
-            "Este é uma foto de praia"
+            "Esta é uma foto de praia",
+            true
         )
-        liveData.postValue(instaData)
+        liveData.postValue(Resource(Status.SUCCESS, instaData))
+
+        // given
+        whenever(instaRepository.getData()).thenReturn(liveData)
+
+        // when
+        testRule.launchActivity(null)
+
+        // then
+        onView(withId(R.id.tv_title_author_name)).check(matches(withText("eduardoaraujo")))
+    }
+
+    @Test
+    fun userInfo_returns_no_info_by_default2() {
+        val liveData = MutableLiveData<Resource<Insta>>()
+        val instaData = Insta(
+            "https://cdn.glitch.com/c335e4ce-57d4-4636-951c-12539010222a%2Feu.jpg?1555454871499",
+            "eduardoaraujo",
+            "https://cdn.glitch.com/c335e4ce-57d4-4636-951c-12539010222a%2Fbeach.jpg?1555454872159",
+            "Esta é uma foto de praia",
+            false
+        )
+        liveData.postValue(Resource(Status.SUCCESS, instaData))
 
         // given
         whenever(instaRepository.getData()).thenReturn(liveData)
