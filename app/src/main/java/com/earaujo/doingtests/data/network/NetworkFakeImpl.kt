@@ -4,7 +4,6 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.earaujo.doingtests.data.model.Insta
 import com.earaujo.doingtests.data.repository.Resource
-import com.earaujo.doingtests.data.repository.Status
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,9 +22,9 @@ class NetworkFakeImpl : Network {
                 true
             )
             delay(1000)
-            data.postValue(Resource(Status.SUCCESS, instaData))
+            data.postValue(Resource.success(instaData))
         }
-        data.value = Resource(Status.LOADING)
+        data.value = Resource.loading()
         return data
     }
 }

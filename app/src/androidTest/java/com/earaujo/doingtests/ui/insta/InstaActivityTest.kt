@@ -4,8 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.espresso.matcher.ViewMatchers.withText
+import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
@@ -14,16 +13,17 @@ import com.earaujo.doingtests.R
 import com.earaujo.doingtests.data.model.Insta
 import com.earaujo.doingtests.data.repository.InstaRepository
 import com.earaujo.doingtests.data.repository.Resource
-import com.earaujo.doingtests.data.repository.Status
 import com.earaujo.doingtests.di.AppComponentTest
 import com.earaujo.doingtests.di.DaggerAppComponentTest
 import com.earaujo.doingtests.modules.AppModule
 import com.earaujo.doingtests.modules.insta.InstaRepositoryModuleTest
 import com.nhaarman.mockito_kotlin.whenever
+import org.hamcrest.CoreMatchers.not
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import javax.inject.Inject
 
@@ -49,11 +49,10 @@ class InstaActivityTest {
             .build()
         app.appComponent = appComponentTest
         appComponentTest.inject(this)
-        System.out.println("==== TestAppComponent injected")
     }
 
     @Test
-    fun userInfo_returns_no_info_by_default() {
+    fun WhenReceiveASuccesRequestWithSponsor_TitleAuthorAuthorNameAuthorCommentAndSponsorShouldApperPropperly() {
         val liveData = MutableLiveData<Resource<Insta>>()
         val instaData = Insta(
             "https://cdn.glitch.com/c335e4ce-57d4-4636-951c-12539010222a%2Feu.jpg?1555454871499",
@@ -62,7 +61,7 @@ class InstaActivityTest {
             "Esta é uma foto de praia",
             true
         )
-        liveData.postValue(Resource(Status.SUCCESS, instaData))
+        liveData.postValue(Resource.success(instaData))
 
         // given
         whenever(instaRepository.getData()).thenReturn(liveData)
@@ -72,10 +71,13 @@ class InstaActivityTest {
 
         // then
         onView(withId(R.id.tv_title_author_name)).check(matches(withText("eduardoaraujo")))
+        onView(withId(R.id.tv_desc_author_name)).check(matches(withText("eduardoaraujo")))
+        onView(withId(R.id.tv_desc_author_comment)).check(matches(withText("Esta é uma foto de praia")))
+        onView(withId(R.id.tv_title_sponsored)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun userInfo_returns_no_info_by_default2() {
+    fun WhenReceiveASuccesRequestWithoutSponsor_TitleAuthorAuthorNameAuthorCommentAndSponsorShouldApperPropperly() {
         val liveData = MutableLiveData<Resource<Insta>>()
         val instaData = Insta(
             "https://cdn.glitch.com/c335e4ce-57d4-4636-951c-12539010222a%2Feu.jpg?1555454871499",
@@ -84,7 +86,7 @@ class InstaActivityTest {
             "Esta é uma foto de praia",
             false
         )
-        liveData.postValue(Resource(Status.SUCCESS, instaData))
+        liveData.postValue(Resource.success(instaData))
 
         // given
         whenever(instaRepository.getData()).thenReturn(liveData)
@@ -94,6 +96,39 @@ class InstaActivityTest {
 
         // then
         onView(withId(R.id.tv_title_author_name)).check(matches(withText("eduardoaraujo")))
+        onView(withId(R.id.tv_desc_author_name)).check(matches(withText("eduardoaraujo")))
+        onView(withId(R.id.tv_desc_author_comment)).check(matches(withText("Esta é uma foto de praia")))
+        onView(withId(R.id.tv_title_sponsored)).check(matches(not(isDisplayed())))
+    }
+
+    @Test
+    fun WhenStartARequetAndReceivedALoading_SpinnerShouldAppear() {
+        val liveData = MutableLiveData<Resource<Insta>>()
+        liveData.postValue(Resource.loading())
+
+        // given
+        whenever(instaRepository.getData()).thenReturn(liveData)
+
+        // when
+        testRule.launchActivity(null)
+
+        // then
+        onView(withId(R.id.pb_loading)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun WhenStartARequetAndReceivedASuccess_SpinnerShouldNotAppear() {
+        val liveData = MutableLiveData<Resource<Insta>>()
+        liveData.postValue(Resource.success(mock(Insta::class.java)))
+
+        // given
+        whenever(instaRepository.getData()).thenReturn(liveData)
+
+        // when
+        testRule.launchActivity(null)
+
+        // then
+        onView(withId(R.id.pb_loading)).check(matches(not(isDisplayed())))
     }
 
     /*@Test

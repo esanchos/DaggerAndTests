@@ -25,7 +25,7 @@ import com.earaujo.doingtests.data.repository.Status.*
 class Resource<T> constructor(val status: Status, val data: T? = null, val message: String? = null) {
     companion object {
 
-        fun <T> success(data: T): Resource<T> {
+        fun <T> success(data: T?): Resource<T> {
             return Resource(SUCCESS, data, null)
         }
 
@@ -33,7 +33,7 @@ class Resource<T> constructor(val status: Status, val data: T? = null, val messa
             return Resource(ERROR, data, msg)
         }
 
-        fun <T> loading(data: T?): Resource<T> {
+        fun <T> loading(data: T? = null): Resource<T> {
             return Resource(LOADING, data, null)
         }
     }

@@ -60,9 +60,10 @@ class InstaActivity : AppCompatActivity() {
     private fun populateUi(resourceData: Resource<Insta>) {
         when (resourceData.status) {
             Status.LOADING -> {
-                //TODO show loading spinner
+                pb_loading.visibility = View.VISIBLE
             }
             Status.SUCCESS -> {
+                pb_loading.visibility = View.GONE
                 resourceData.data?.let {
                     tv_title_author_name.text = it.titleAuthorName
                     tv_desc_author_name.text = it.titleAuthorName
@@ -80,7 +81,9 @@ class InstaActivity : AppCompatActivity() {
                         .into(iv_main_imagem)
                 }
             }
-            Status.ERROR -> TODO()
+            Status.ERROR -> {
+                pb_loading.visibility = View.GONE
+            }
         }
     }
 }
