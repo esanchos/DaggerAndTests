@@ -11,12 +11,11 @@ import android.support.test.runner.AndroidJUnit4
 import com.earaujo.doingtests.DoingTests
 import com.earaujo.doingtests.R
 import com.earaujo.doingtests.data.model.Insta
-import com.earaujo.doingtests.data.repository.InstaRepository
 import com.earaujo.doingtests.data.repository.Resource
 import com.earaujo.doingtests.di.AppComponentTest
 import com.earaujo.doingtests.di.DaggerAppComponentTest
 import com.earaujo.doingtests.modules.AppModule
-import com.earaujo.doingtests.modules.insta.InstaRepositoryModuleTest
+import com.earaujo.doingtests.modules.insta.InstaViewModelModuleTest
 import com.nhaarman.mockito_kotlin.whenever
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
@@ -35,7 +34,7 @@ class InstaActivityTest {
     val testRule: ActivityTestRule<InstaActivity> = ActivityTestRule(InstaActivity::class.java, false, false)
 
     @Inject
-    lateinit var instaRepository: InstaRepository
+    lateinit var instaViewModel: InstaViewModel
 
     private lateinit var appComponentTest: AppComponentTest
 
@@ -45,7 +44,7 @@ class InstaActivityTest {
         val app = InstrumentationRegistry.getTargetContext().applicationContext as DoingTests
         appComponentTest = DaggerAppComponentTest.builder()
             .appModule(AppModule(app))
-            .instaRepositoryModule(InstaRepositoryModuleTest())
+            .instaViewModelModule(InstaViewModelModuleTest())
             .build()
         app.appComponent = appComponentTest
         appComponentTest.inject(this)
@@ -64,7 +63,7 @@ class InstaActivityTest {
         liveData.postValue(Resource.success(instaData))
 
         // given
-        whenever(instaRepository.getData()).thenReturn(liveData)
+        whenever(instaViewModel.getData()).thenReturn(liveData)
 
         // when
         testRule.launchActivity(null)
@@ -89,7 +88,7 @@ class InstaActivityTest {
         liveData.postValue(Resource.success(instaData))
 
         // given
-        whenever(instaRepository.getData()).thenReturn(liveData)
+        whenever(instaViewModel.getData()).thenReturn(liveData)
 
         // when
         testRule.launchActivity(null)
@@ -107,7 +106,7 @@ class InstaActivityTest {
         liveData.postValue(Resource.loading())
 
         // given
-        whenever(instaRepository.getData()).thenReturn(liveData)
+        whenever(instaViewModel.getData()).thenReturn(liveData)
 
         // when
         testRule.launchActivity(null)
@@ -122,7 +121,7 @@ class InstaActivityTest {
         liveData.postValue(Resource.success(mock(Insta::class.java)))
 
         // given
-        whenever(instaRepository.getData()).thenReturn(liveData)
+        whenever(instaViewModel.getData()).thenReturn(liveData)
 
         // when
         testRule.launchActivity(null)

@@ -9,11 +9,11 @@ import javax.inject.Inject
 
 @DebugOpenClass
 @PerActivity
-class InstaViewModelFactory @Inject constructor(private val instaRepository: InstaRepository)
+class InstaViewModelFactory @Inject constructor(private val instaRepository: InstaRepository, private val instaViewModel: InstaViewModel)
     : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return InstaViewModel(instaRepository) as T
+        return instaViewModel as T
     }
 }
