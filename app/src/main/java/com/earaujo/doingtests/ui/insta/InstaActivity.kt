@@ -41,9 +41,14 @@ class InstaActivity : AppCompatActivity() {
 
         setImageHeigthSize()
 
-        viewModel.getData().observe(this, Observer { insta ->
+        btn_reload.setOnClickListener {
+            viewModel.reload()
+        }
+
+        viewModel.getData.observe(this, Observer { insta ->
             insta?.let { populateUi(it) }
         })
+        viewModel.reload()
     }
 
     private fun setImageHeigthSize() {

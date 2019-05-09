@@ -4,7 +4,7 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import com.earaujo.doingtests.data.model.Insta
-import com.earaujo.doingtests.data.repository.InstaRepository
+import com.earaujo.doingtests.data.repository.insta.InstaRepository
 import com.earaujo.doingtests.data.repository.Resource
 import org.junit.Before
 import org.junit.Rule

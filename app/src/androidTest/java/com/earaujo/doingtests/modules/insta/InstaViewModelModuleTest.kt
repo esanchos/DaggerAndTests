@@ -1,6 +1,6 @@
 package com.earaujo.doingtests.modules.insta
 
-import com.earaujo.doingtests.data.repository.InstaRepository
+import com.earaujo.doingtests.data.repository.insta.InstaRepository
 import com.earaujo.doingtests.ui.insta.InstaViewModel
 import org.mockito.Mockito.mock
 

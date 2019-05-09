@@ -3,10 +3,11 @@ package com.earaujo.doingtests.di
 import android.app.Application
 import com.earaujo.doingtests.car.Driver
 import com.earaujo.doingtests.data.db.QuoteDao
-import com.earaujo.doingtests.data.repository.InstaRepository
+import com.earaujo.doingtests.data.repository.insta.InstaRepository
 import com.earaujo.doingtests.data.repository.QuoteRepository
 import com.earaujo.doingtests.modules.AppModule
 import com.earaujo.doingtests.modules.car.DriverModule
+import com.earaujo.doingtests.modules.insta.InstaDatabaseFakeImplModule
 import com.earaujo.doingtests.modules.insta.InstaRepositoryModule
 import com.earaujo.doingtests.modules.insta.InstaViewModelModule
 import com.earaujo.doingtests.modules.insta.NetworkFakeModule
@@ -27,7 +28,8 @@ import javax.inject.Singleton
         QuoteRepositoryModule::class,
         InstaRepositoryModule::class,
         NetworkFakeModule::class,
-        InstaViewModelModule::class
+        InstaViewModelModule::class,
+        InstaDatabaseFakeImplModule::class
     ]
 )
 interface AppComponent {

@@ -5,5 +5,5 @@ import com.earaujo.doingtests.data.model.Insta
 import com.earaujo.doingtests.data.repository.Resource
 
 interface Network {
-    fun getData(): LiveData<Resource<Insta>>
+    fun getData(): LiveData<Insta>
 }
