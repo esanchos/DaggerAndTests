@@ -2,6 +2,7 @@ package com.earaujo.doingtests.di
 
 import com.earaujo.doingtests.modules.AppModule
 import com.earaujo.doingtests.modules.car.DriverModule
+import com.earaujo.doingtests.modules.insta.InstaDatabaseFakeImplModule
 import com.earaujo.doingtests.modules.insta.InstaRepositoryModule
 import com.earaujo.doingtests.modules.insta.InstaViewModelModule
 import com.earaujo.doingtests.modules.insta.NetworkFakeModule
@@ -22,7 +23,8 @@ import javax.inject.Singleton
         QuoteRepositoryModule::class,
         InstaRepositoryModule::class,
         NetworkFakeModule::class,
-        InstaViewModelModule::class
+        InstaViewModelModule::class,
+        InstaDatabaseFakeImplModule::class
     ]
 )
 interface AppComponentTest : AppComponent {

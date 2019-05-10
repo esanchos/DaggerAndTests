@@ -63,7 +63,7 @@ class InstaActivityTest {
         liveData.postValue(Resource.success(instaData))
 
         // given
-        whenever(instaViewModel.getData()).thenReturn(liveData)
+        whenever(instaViewModel.getData).thenReturn(liveData)
 
         // when
         testRule.launchActivity(null)
@@ -88,7 +88,7 @@ class InstaActivityTest {
         liveData.postValue(Resource.success(instaData))
 
         // given
-        whenever(instaViewModel.getData()).thenReturn(liveData)
+        whenever(instaViewModel.getData).thenReturn(liveData)
 
         // when
         testRule.launchActivity(null)
@@ -106,7 +106,7 @@ class InstaActivityTest {
         liveData.postValue(Resource.loading())
 
         // given
-        whenever(instaViewModel.getData()).thenReturn(liveData)
+        whenever(instaViewModel.getData).thenReturn(liveData)
 
         // when
         testRule.launchActivity(null)
@@ -121,7 +121,7 @@ class InstaActivityTest {
         liveData.postValue(Resource.success(mock(Insta::class.java)))
 
         // given
-        whenever(instaViewModel.getData()).thenReturn(liveData)
+        whenever(instaViewModel.getData).thenReturn(liveData)
 
         // when
         testRule.launchActivity(null)

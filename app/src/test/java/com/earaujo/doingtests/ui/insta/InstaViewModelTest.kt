@@ -53,7 +53,8 @@ class InstaViewModelTest {
             return@thenAnswer liveData
         }
 
-        instaViewModel.getData().observeForever(observer)
+        instaViewModel.getData.observeForever(observer)
+        instaViewModel.reload()
         Mockito.verify(observer).onChanged(res)
     }
 }
