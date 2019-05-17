@@ -1,6 +1,7 @@
 package com.earaujo.doingtests.ui.insta
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -8,30 +9,21 @@ import android.util.DisplayMetrics
 import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.earaujo.doingtests.DoingTests
 import com.earaujo.doingtests.R
 import com.earaujo.doingtests.data.model.Insta
 import com.earaujo.doingtests.data.repository.Resource
 import com.earaujo.doingtests.data.repository.Status
-import com.earaujo.doingtests.di.DaggerInstaActivityComponent
 import kotlinx.android.synthetic.main.activity_insta.*
 import javax.inject.Inject
 
 class InstaActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var viewModelFactory: InstaViewModelFactory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_insta)
-
-        DaggerInstaActivityComponent
-            .builder()
-            .appComponent((application as DoingTests).appComponent)
-            .build()
-            .inject(this)
-
         initializeUi()
     }
 

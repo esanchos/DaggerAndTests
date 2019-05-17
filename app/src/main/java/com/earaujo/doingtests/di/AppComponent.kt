@@ -1,47 +1,46 @@
 package com.earaujo.doingtests.di
 
 import android.app.Application
+import com.earaujo.doingtests.DoingTests
 import com.earaujo.doingtests.car.Driver
-import com.earaujo.doingtests.data.db.QuoteDao
-import com.earaujo.doingtests.data.repository.insta.InstaRepository
 import com.earaujo.doingtests.data.repository.QuoteRepository
-import com.earaujo.doingtests.modules.AppModule
 import com.earaujo.doingtests.modules.car.DriverModule
-import com.earaujo.doingtests.modules.insta.InstaDatabaseFakeImplModule
-import com.earaujo.doingtests.modules.insta.InstaRepositoryModule
-import com.earaujo.doingtests.modules.insta.InstaViewModelModule
-import com.earaujo.doingtests.modules.insta.NetworkFakeModule
+import com.earaujo.doingtests.modules.insta.*
 import com.earaujo.doingtests.modules.quotes.DatabaseFakeModule
 import com.earaujo.doingtests.modules.quotes.QuoteDaoModule
 import com.earaujo.doingtests.modules.quotes.QuoteRepositoryModule
-import com.earaujo.doingtests.ui.insta.InstaViewModel
+import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
-        AppModule::class,
+        AndroidInjectionModule::class,
         DriverModule::class,
         DatabaseFakeModule::class,
         QuoteDaoModule::class,
         QuoteRepositoryModule::class,
         InstaRepositoryModule::class,
         NetworkFakeModule::class,
-        InstaViewModelModule::class,
-        InstaDatabaseFakeImplModule::class
+        InstaDatabaseFakeImplModule::class,
+        InstaViewModelFactoryModule::class,
+        MainActivityModule::class
     ]
 )
 interface AppComponent {
-    fun getInstaViewModel(): InstaViewModel
 
     fun getDriver(): Driver
 
-    fun getQuotaDao(): QuoteDao
-
     fun getQuoteRepository(): QuoteRepository
 
-    fun getInstaRepository(): InstaRepository
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun application(application: Application): Builder
+        fun build(): AppComponent
+    }
 
-    fun inject(app: Application)
+    fun inject(app: DoingTests)
 }

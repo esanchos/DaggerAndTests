@@ -8,9 +8,10 @@ import com.earaujo.doingtests.annotations.DebugOpenClass
 import com.earaujo.doingtests.data.model.Insta
 import com.earaujo.doingtests.data.repository.Resource
 import com.earaujo.doingtests.data.repository.insta.InstaRepository
+import javax.inject.Inject
 
 @DebugOpenClass
-class InstaViewModel(private val instaRepository: InstaRepository) : ViewModel() {
+class InstaViewModel @Inject constructor(private val instaRepository: InstaRepository) : ViewModel() {
 
     private val searchRequest = MediatorLiveData<Unit>()
 

@@ -1,21 +1,16 @@
 package com.earaujo.doingtests.ui.insta
 
 import android.arch.lifecycle.MutableLiveData
-import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.earaujo.doingtests.DoingTests
 import com.earaujo.doingtests.R
 import com.earaujo.doingtests.data.model.Insta
 import com.earaujo.doingtests.data.repository.Resource
-import com.earaujo.doingtests.di.AppComponentTest
-import com.earaujo.doingtests.di.DaggerAppComponentTest
-import com.earaujo.doingtests.modules.AppModule
-import com.earaujo.doingtests.modules.insta.InstaViewModelModuleTest
+import com.earaujo.doingtests.util.ViewModelUtil
 import com.nhaarman.mockito_kotlin.whenever
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
@@ -24,30 +19,31 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
-import javax.inject.Inject
+import android.content.Intent
+import android.support.test.runner.intercepting.SingleActivityFactory
+import org.mockito.Mock
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class InstaActivityTest {
 
+    private val injectedFactory = object : SingleActivityFactory<InstaActivity>(InstaActivity::class.java) {
+        override fun create(intent: Intent): InstaActivity {
+            val activity = InstaActivity()
+            activity.viewModelFactory = ViewModelUtil.createFor(instaViewModel)
+            return activity
+        }
+    }
+
     @get:Rule
-    val testRule: ActivityTestRule<InstaActivity> = ActivityTestRule(InstaActivity::class.java, false, false)
+    var testRule: ActivityTestRule<InstaActivity> = ActivityTestRule(injectedFactory, false, false)
 
-    @Inject
+    @Mock
     lateinit var instaViewModel: InstaViewModel
-
-    private lateinit var appComponentTest: AppComponentTest
 
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        val app = InstrumentationRegistry.getTargetContext().applicationContext as DoingTests
-        appComponentTest = DaggerAppComponentTest.builder()
-            .appModule(AppModule(app))
-            .instaViewModelModule(InstaViewModelModuleTest())
-            .build()
-        app.appComponent = appComponentTest
-        appComponentTest.inject(this)
     }
 
     @Test
