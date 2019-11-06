@@ -9,6 +9,7 @@ import com.earaujo.doingtests.DoingTests
 import com.earaujo.doingtests.R
 import com.earaujo.doingtests.data.model.Quote
 import com.earaujo.doingtests.di.DaggerQuotesComponent
+import com.earaujo.doingtests.ui.insta.MyClass
 import kotlinx.android.synthetic.main.activity_quotes.*
 import javax.inject.Inject
 
@@ -16,6 +17,9 @@ class QuotesActivity: AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: QuotesViewModelFactory
+
+    @Inject
+    lateinit var myClass: MyClass
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,5 +55,7 @@ class QuotesActivity: AppCompatActivity() {
             editText_quote.setText("")
             editText_author.setText("")
         }
+
+        editText_quote.setText(myClass.getPackage())
     }
 }
